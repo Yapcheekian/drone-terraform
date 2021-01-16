@@ -21,4 +21,14 @@ resource "linode_instance" "instance" {
       timeout     = "300s"
     }
   }
+
+  provisioner "file" {
+    source      = "${path.module}/init-files/"
+    destination = "/root/init-files/"
+    connection {
+      host        = self.ip_address
+      private_key = chomp(file(var.ssh_private_key))
+      timeout     = "300s"
+    }
+  }
 }
